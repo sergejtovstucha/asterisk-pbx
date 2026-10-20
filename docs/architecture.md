@@ -16,6 +16,64 @@ The architecture combines:
 
 **Status:** Legacy architecture reference. The original implementation is not recommended for new production deployments without modernization and security review.
 
+## Deployment & Tenant Provisioning Lifecycle
+
+```
+
+              STAGE 1 - INITIAL PLATFORM DEPLOYMENT
+================================================================
+
+                Debian Linux + Asterisk installed
+                               |
+              +----------------+----------------+
+              |                |                |
+              v                v                v
+     +----------------+ +---------------+ +----------------+
+     | Asterisk ZIP   | | MariaDB       | | Web Admin ZIP  |
+     | PBX Configs    | | Empty Schema  | | PHP / API      |
+     +----------------+ +---------------+ +----------------+
+              |                |                |
+              +----------------+----------------+
+                               |
+                               v
+                Installation and Configuration
+                  Services / Permissions / ODBC
+                               |
+                               v
+                     PBX Platform Ready
+
+
+              STAGE 2 - AUTOMATED TENANT PROVISIONING
+================================================================
+
+                     PBX Web Interface
+                               |
+                               v
+                Create Company / Assign PREFIX
+                               |
+              +----------------+----------------+
+              |                                 |
+              v                                 v
+     +------------------------+      +------------------------+
+     | Generate Tenant Config |      | MariaDB Realtime       |
+     | centrex/PREFIX/        |      | dialplan / extensions  |
+     | PREFIX.conf            |      | PJSIP / Queues         |
+     +------------------------+      +------------------------+
+              |                                 |
+              +----------------+----------------+
+                               |
+                               v
+                   AMI: dialplan reload
+                               |
+                               v
+                  Asterisk Multitenant PBX
+                               |
+                               v
+               Shared Dialplan + Tenant Contexts
+                       + Realtime / ODBC
+
+```
+
 ## 2. Main Components
 
 ### Asterisk PBX
