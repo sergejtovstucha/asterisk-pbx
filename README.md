@@ -73,6 +73,30 @@ A modernization of the platform is planned using:
 - Better error handling and recovery
 - Automated deployment and testing
 
+## Configurable IVR Call-Flow Architecture
+
+The PBX includes a configurable IVR module with flexible call routing and support for nested IVR menus.
+
+Each IVR menu option can route a call to:
+
+- Internal extensions
+- Hunt groups
+- Call queues
+- Other IVR menus
+
+IVR menus can be connected to build complex call flows using a reusable Asterisk dialplan and custom web administration.
+
+For example:
+
+- Press 1 → Extension 1001
+- Press 2 → Extension 1002
+- Press 3 → Hunt Group
+- Press 4 → Call Queue
+- Press 5 → Another IVR menu
+
+The routing depth is not limited to the number of dialplan levels. Additional loop prevention, such as a depth counter, can be implemented to avoid recursive IVR routing.
+
+This functionality is part of my existing multitenant Asterisk PBX architecture.
 Features will be documented as they are implemented and tested.
 
 ## Repository Purpose
